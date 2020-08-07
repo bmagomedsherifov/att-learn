@@ -1,5 +1,8 @@
 package ru.neoflex.vtb.autotests;
 
+import org.junit.Assert;
+import org.junit.Test;
+import ru.neoflex.controllers.RequestTestController;
 import ru.neoflex.model.CurrentTestimony;
 import ru.neoflex.model.RequestSaveTestimony;
 
@@ -19,7 +22,11 @@ public class SaveTestimonyTest {
         currentTestimony.setElectricity(60);
         requestSaveTestimony.setCurrentTestimony(currentTestimony);
 
+        int actualStatusCode = RequestTestController.getRequestCodeSaveTestimony(saveTestimonyURI, requestSaveTestimony);
 
+
+        Assert.assertEquals(200, actualStatusCode);
+        System.out.println("statusCode : " + actualStatusCode);
     }
 
 }
