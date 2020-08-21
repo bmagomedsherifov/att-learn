@@ -5,46 +5,46 @@ import com.google.gson.annotations.SerializedName;
 public class Cost{
 
 	@SerializedName("coldWater")
-	private double coldWater;
+	private String coldWater;
 
 	@SerializedName("gas")
-	private double gas;
+	private String gas;
 
 	@SerializedName("electricity")
-	private double electricity;
+	private String electricity;
 
 	@SerializedName("hotWater")
-	private double hotWater;
+	private String hotWater;
 
-	public void setColdWater(double coldWater){
+	public void setColdWater(String coldWater){
 		this.coldWater = coldWater;
 	}
 
-	public double getColdWater(){
+	public String getColdWater(){
 		return coldWater;
 	}
 
-	public void setGas(double gas){
+	public void setGas(String gas){
 		this.gas = gas;
 	}
 
-	public double getGas(){
+	public String getGas(){
 		return gas;
 	}
 
-	public void setElectricity(double electricity){
+	public void setElectricity(String electricity){
 		this.electricity = electricity;
 	}
 
-	public double getElectricity(){
+	public String getElectricity(){
 		return electricity;
 	}
 
-	public void setHotWater(double hotWater){
+	public void setHotWater(String hotWater){
 		this.hotWater = hotWater;
 	}
 
-	public double getHotWater(){
+	public String getHotWater(){
 		return hotWater;
 	}
 

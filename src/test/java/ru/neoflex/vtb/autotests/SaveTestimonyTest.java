@@ -5,13 +5,15 @@ import org.junit.Test;
 import ru.neoflex.controllers.RequestTestController;
 import ru.neoflex.model.CurrentTestimony;
 import ru.neoflex.model.RequestSaveTestimony;
+import ru.neoflex.model.ResponseSaveTestimony;
 
 public class SaveTestimonyTest {
+
+    String saveTestimonyURI = "http://localhost:8080/services/testimony/save";
 
     @Test
     public void checkCodeSuccess() {
 
-        String saveTestimonyURI = "http://localhost:8080/services/testimony/save";
         RequestSaveTestimony requestSaveTestimony = new RequestSaveTestimony();
         CurrentTestimony currentTestimony = new CurrentTestimony();
 
@@ -28,5 +30,28 @@ public class SaveTestimonyTest {
         Assert.assertEquals(200, actualStatusCode);
         System.out.println("statusCode : " + actualStatusCode);
     }
+
+    @Test
+    public void checkFaultCodeSuccessTest()  {
+        RequestSaveTestimony requestSaveTestimony = new RequestSaveTestimony();
+        CurrentTestimony currentTestimony = new CurrentTestimony();
+
+        requestSaveTestimony.setDate("02-2020");
+        currentTestimony.setColdWater(30);
+        currentTestimony.setHotWater(40);
+        currentTestimony.setGas(50);
+        currentTestimony.setElectricity(60);
+        requestSaveTestimony.setCurrentTestimony(currentTestimony);
+
+        ResponseSaveTestimony responseSaveTestimony = RequestTestController.getResponseBodySave(saveTestimonyURI, requestSaveTestimony);
+        String resultCode = responseSaveTestimony.getFaultcode().getResultCode();
+        String resultText = responseSaveTestimony.getFaultcode().getResultText();
+        System.out.println(resultCode);
+        System.out.println(resultText);
+        Assert.assertEquals("0", resultCode);
+        Assert.assertEquals("success", resultText);
+
+    }
+
 
 }

@@ -5,13 +5,15 @@ import org.junit.Test;
 import ru.neoflex.controllers.RequestTestController;
 import ru.neoflex.model.Price;
 import ru.neoflex.model.RequestSetPrice;
+import ru.neoflex.model.ResponseSetPrice;
 
 public class ChangePriceTest {
+
+    String changeTestimonyURI = "http://localhost:8080/services/testimony/changePrice";
 
     @Test
     public void changePriceCheckSuccess() {
 
-        String changeTestimonyURI = "http://localhost:8080/services/testimony/changePrice";
         RequestSetPrice requestSetPrice = new RequestSetPrice();
         Price price = new Price();
 
@@ -26,6 +28,27 @@ public class ChangePriceTest {
 
         Assert.assertEquals(200, actualStatusCode);
         System.out.println("statusCode : " + actualStatusCode);
+    }
+
+    @Test
+    public void changePriceCheckBody() {
+
+        RequestSetPrice requestSetPrice = new RequestSetPrice();
+        Price price = new Price();
+
+        price.setPriceHotWater(10);
+        price.setPriceHotWater(20);
+        price.setPriceGas(30);
+        price.setPriceElectricity(40);
+        requestSetPrice.setPrice(price);
+
+        ResponseSetPrice responseSetPrice = RequestTestController.getResponseBodyChange(changeTestimonyURI, requestSetPrice);
+        String resultCode = responseSetPrice.getResultCode();
+        String resultText = responseSetPrice.getResultText();
+
+
+        Assert.assertEquals("0", resultCode);
+        Assert.assertEquals("success", resultText);
     }
 
 }

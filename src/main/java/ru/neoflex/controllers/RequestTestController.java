@@ -1,7 +1,6 @@
 package ru.neoflex.controllers;
 import io.restassured.http.ContentType;
-import ru.neoflex.model.RequestSaveTestimony;
-import ru.neoflex.model.RequestSetPrice;
+import ru.neoflex.model.*;
 
 import static io.restassured.RestAssured.given;
 
@@ -50,4 +49,41 @@ public class RequestTestController {
                 response().
                 getStatusCode();
     }
+
+    public static ResponseSaveTestimony getResponseBodySave(String uRL, RequestSaveTestimony requestSaveTestimony) {
+
+        return given().
+                contentType(ContentType.JSON).
+                when().
+                post(uRL).
+                then().
+                extract().
+                response().
+                as(ResponseSaveTestimony.class);
+    }
+
+    public static ResponseSetPrice getResponseBodyChange(String uRL, RequestSetPrice requestSetPrice) {
+
+        return given().
+                contentType(ContentType.JSON).
+                when().
+                post(uRL).
+                then().
+                extract().
+                response().
+                as(ResponseSetPrice.class);
+    }
+
+    public static ResponseOldTestimony getResponseBodyOld(String uRL) {
+
+        return given().
+                contentType(ContentType.JSON).
+                when().
+                post(uRL).
+                then().
+                extract().
+                response().
+                as(ResponseOldTestimony.class);
+    }
+
 }
