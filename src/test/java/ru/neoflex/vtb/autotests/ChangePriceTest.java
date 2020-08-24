@@ -2,10 +2,15 @@ package ru.neoflex.vtb.autotests;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import ru.neoflex.controllers.RequestTestController;
+import ru.neoflex.dao.MySqlConnector;
 import ru.neoflex.model.Price;
 import ru.neoflex.model.RequestSetPrice;
 import ru.neoflex.model.ResponseSetPrice;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class ChangePriceTest {
 
@@ -31,15 +36,15 @@ public class ChangePriceTest {
     }
 
     @Test
-    public void changePriceCheckBody() {
+    public void changePriceCheckBody() throws SQLException {
 
         RequestSetPrice requestSetPrice = new RequestSetPrice();
         Price price = new Price();
 
-        price.setPriceColdWater(10);
-        price.setPriceHotWater(20);
-        price.setPriceGas(30);
-        price.setPriceElectricity(40);
+        price.setPriceColdWater(11);
+        price.setPriceHotWater(21);
+        price.setPriceGas(31);
+        price.setPriceElectricity(41);
         requestSetPrice.setPrice(price);
 
         ResponseSetPrice responseSetPrice = RequestTestController.getResponseBodyChange(changeTestimonyURI, requestSetPrice);
@@ -51,6 +56,18 @@ public class ChangePriceTest {
 
         Assert.assertEquals("0", resultCode);
         Assert.assertEquals("success", resultText);
+
+        ResultSet expectedResultChange = MySqlConnector.selectAllFrommPriceGuide(requestSetPrice.getPrice().getPriceColdWater());
+        while (expectedResultChange.next()) {
+            int priceColdWater = expectedResultChange.getInt("priceColdWater");
+            int priceHotWater = expectedResultChange.getInt("priceHotWater");
+            int priceGas = expectedResultChange.getInt("priceGas");
+            int priceElectricity = expectedResultChange.getInt("priceElectricity");
+            Assertions.assertEquals(priceColdWater, requestSetPrice.getPrice().getPriceColdWater());
+            Assertions.assertEquals(priceHotWater, requestSetPrice.getPrice().getPriceHotWater());
+            Assertions.assertEquals(priceGas, requestSetPrice.getPrice().getPriceGas());
+            Assertions.assertEquals(priceElectricity, requestSetPrice.getPrice().getPriceElectricity());
+        }
     }
 
 }
