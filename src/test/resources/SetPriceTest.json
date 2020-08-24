@@ -1,0 +1,10 @@
+[
+  {
+    "price": {
+      "priceColdWater": 1050,
+      "priceHotWater": 123,
+      "priceGas": 124,
+      "priceElectricity": 12412412
+    }
+  }
+]

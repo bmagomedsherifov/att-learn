@@ -3,30 +3,42 @@ package ru.neoflex.vtb.autotests;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import ru.neoflex.controllers.RequestTestController;
 import ru.neoflex.dao.MySqlConnector;
 import ru.neoflex.model.Price;
 import ru.neoflex.model.RequestSetPrice;
 import ru.neoflex.model.ResponseSetPrice;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Iterator;
+
+import static ru.neoflex.vtb.autotests.TestBase.*;
 
 public class ChangePriceTest {
 
     String changeTestimonyURI = "http://localhost:8080/services/testimony/changePrice";
 
-    @Test
-    public void changePriceCheckSuccess() {
+    public static Iterator<Object[]> dataRead() throws IOException {
+        String requestFile = "src/test/resources/SetPriceTest.json";
+        return validRequestSetPrice(requestFile);
+    }
 
-        RequestSetPrice requestSetPrice = new RequestSetPrice();
+    @MethodSource("dataRead")
+    @ParameterizedTest
+    public void changePriceCheckSuccess(RequestSetPrice requestSetPrice ) {
+
+        /* RequestSetPrice requestSetPrice = new RequestSetPrice();
         Price price = new Price();
 
         price.setPriceHotWater(10);
         price.setPriceHotWater(20);
         price.setPriceGas(30);
         price.setPriceElectricity(40);
-        requestSetPrice.setPrice(price);
+        requestSetPrice.setPrice(price); */
 
         int actualStatusCode = RequestTestController.getRequestCodeChangePrice(changeTestimonyURI, requestSetPrice);
 
@@ -35,17 +47,18 @@ public class ChangePriceTest {
         System.out.println("statusCode : " + actualStatusCode);
     }
 
-    @Test
-    public void changePriceCheckBody() throws SQLException {
+    @MethodSource("dataRead")
+    @ParameterizedTest
+    public void changePriceCheckBody(RequestSetPrice requestSetPrice) throws SQLException {
 
-        RequestSetPrice requestSetPrice = new RequestSetPrice();
+        /*RequestSetPrice requestSetPrice = new RequestSetPrice();
         Price price = new Price();
 
         price.setPriceColdWater(11);
         price.setPriceHotWater(21);
         price.setPriceGas(31);
         price.setPriceElectricity(41);
-        requestSetPrice.setPrice(price);
+        requestSetPrice.setPrice(price); */
 
         ResponseSetPrice responseSetPrice = RequestTestController.getResponseBodyChange(changeTestimonyURI, requestSetPrice);
         String resultCode = responseSetPrice.getResultCode();

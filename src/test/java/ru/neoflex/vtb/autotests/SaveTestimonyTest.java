@@ -1,25 +1,35 @@
 package ru.neoflex.vtb.autotests;
-
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import ru.neoflex.controllers.RequestTestController;
 import ru.neoflex.dao.MySqlConnector;
 import ru.neoflex.model.CurrentTestimony;
 import ru.neoflex.model.RequestSaveTestimony;
 import ru.neoflex.model.ResponseSaveTestimony;
-
+import static ru.neoflex.vtb.autotests.TestBase.*;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Iterator;
 
 public class SaveTestimonyTest {
 
     String saveTestimonyURI = "http://localhost:8080/services/testimony/save";
 
-    @Test
-    public void checkCodeSuccess() {
 
-        RequestSaveTestimony requestSaveTestimony = new RequestSaveTestimony();
+    public static Iterator<Object[]> dataRead() throws IOException {
+        String requestFile = "src/test/resources/SaveTestimonyTest.json";
+        return validRequest(requestFile);
+    }
+
+    @MethodSource("dataRead")
+    @ParameterizedTest
+    public void checkCodeSuccess(RequestSaveTestimony requestSaveTestimony) {
+
+       /* RequestSaveTestimony requestSaveTestimony = new RequestSaveTestimony();
         CurrentTestimony currentTestimony = new CurrentTestimony();
 
         requestSaveTestimony.setDate("02-2020");
@@ -27,7 +37,7 @@ public class SaveTestimonyTest {
         currentTestimony.setHotWater(40);
         currentTestimony.setGas(50);
         currentTestimony.setElectricity(60);
-        requestSaveTestimony.setCurrentTestimony(currentTestimony);
+        requestSaveTestimony.setCurrentTestimony(currentTestimony); */
 
         int actualStatusCode = RequestTestController.getRequestCodeSaveTestimony(saveTestimonyURI, requestSaveTestimony);
 
@@ -36,9 +46,11 @@ public class SaveTestimonyTest {
         System.out.println("statusCode : " + actualStatusCode);
     }
 
-    @Test
-    public void checkFaultCodeSuccessTest() throws SQLException {
-        RequestSaveTestimony requestSaveTestimony = new RequestSaveTestimony();
+    @MethodSource("dataRead")
+    @ParameterizedTest
+    public void checkFaultCodeSuccessTest(RequestSaveTestimony requestSaveTestimony) throws SQLException {
+
+        /*RequestSaveTestimony requestSaveTestimony = new RequestSaveTestimony();
         CurrentTestimony currentTestimony = new CurrentTestimony();
 
         requestSaveTestimony.setDate("04-2020");
@@ -46,7 +58,7 @@ public class SaveTestimonyTest {
         currentTestimony.setHotWater(40);
         currentTestimony.setGas(50);
         currentTestimony.setElectricity(60);
-        requestSaveTestimony.setCurrentTestimony(currentTestimony);
+        requestSaveTestimony.setCurrentTestimony(currentTestimony); */
 
         ResponseSaveTestimony responseSaveTestimony = RequestTestController.getResponseBodySave(saveTestimonyURI, requestSaveTestimony);
         String resultCode = responseSaveTestimony.getFaultcode().getResultCode();

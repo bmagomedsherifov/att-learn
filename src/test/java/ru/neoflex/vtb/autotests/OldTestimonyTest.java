@@ -12,7 +12,8 @@ import java.sql.SQLException;
 
 public class OldTestimonyTest {
 
-    String oldTestimonyURI = "http://localhost:8080/services/testimony/get/old/testimony/02-2020";
+    String testimonyDate = "02-2020";
+    String oldTestimonyURI = "http://localhost:8080/services/testimony/get/old/testimony/" + testimonyDate;
 
     @Test
     public void checkSuccessCodeTestimony(){
@@ -62,7 +63,7 @@ public class OldTestimonyTest {
             Assertions.assertEquals(cost_electricity, responseOldTestimony.getCost().getElectricity());
             Assertions.assertEquals(total_cost, responseOldTestimony.getTotalCost());
 
-            
+
         }
 
 
