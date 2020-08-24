@@ -36,7 +36,7 @@ public class ChangePriceTest {
         RequestSetPrice requestSetPrice = new RequestSetPrice();
         Price price = new Price();
 
-        price.setPriceHotWater(10);
+        price.setPriceColdWater(10);
         price.setPriceHotWater(20);
         price.setPriceGas(30);
         price.setPriceElectricity(40);
@@ -46,6 +46,8 @@ public class ChangePriceTest {
         String resultCode = responseSetPrice.getResultCode();
         String resultText = responseSetPrice.getResultText();
 
+        System.out.println(resultCode);
+        System.out.println(resultText);
 
         Assert.assertEquals("0", resultCode);
         Assert.assertEquals("success", resultText);

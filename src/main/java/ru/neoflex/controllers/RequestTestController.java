@@ -6,7 +6,7 @@ import static io.restassured.RestAssured.given;
 
 public class RequestTestController {
 
-    //Метод для отправки Post запроса на микросервис.
+    //Метод для отправки Post запроса на микросервис
 
     public static int getRequestCodeSaveTestimony(String uRL, RequestSaveTestimony requestSaveTestimony) {
 
@@ -43,17 +43,22 @@ public class RequestTestController {
         return given().
                 contentType(ContentType.JSON).
                 when().
-                post(uRL).
+                get(uRL).
                 then().
                 extract().
                 response().
                 getStatusCode();
     }
 
+
+
+
+
     public static ResponseSaveTestimony getResponseBodySave(String uRL, RequestSaveTestimony requestSaveTestimony) {
 
         return given().
                 contentType(ContentType.JSON).
+                body(requestSaveTestimony).
                 when().
                 post(uRL).
                 then().
@@ -66,6 +71,7 @@ public class RequestTestController {
 
         return given().
                 contentType(ContentType.JSON).
+                body(requestSetPrice).
                 when().
                 post(uRL).
                 then().
@@ -79,7 +85,7 @@ public class RequestTestController {
         return given().
                 contentType(ContentType.JSON).
                 when().
-                post(uRL).
+                get(uRL).
                 then().
                 extract().
                 response().

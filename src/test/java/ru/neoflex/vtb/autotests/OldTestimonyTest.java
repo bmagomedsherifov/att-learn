@@ -7,10 +7,10 @@ import ru.neoflex.model.ResponseOldTestimony;
 
 public class OldTestimonyTest {
 
-    String oldTestimonyURI = "http://localhost:8080/services/testimony/get/old/testimony/01-2020";
+    String oldTestimonyURI = "http://localhost:8080/services/testimony/get/old/testimony/02-2020";
 
     @Test
-    public void checkSuccessOldtTestimony(){
+    public void checkSuccessCodeTestimony(){
 
         int actualStatusCode = RequestTestController.getRequestOldTestimony(oldTestimonyURI);
 
@@ -25,18 +25,12 @@ public class OldTestimonyTest {
     public void checkBodyOldtTestimony(){
 
         ResponseOldTestimony responseOldTestimony = RequestTestController.getResponseBodyOld(oldTestimonyURI);
-        String date = responseOldTestimony.getDate();
-        String previousDate = responseOldTestimony.getPreviousDate();
-        int coldWater = responseOldTestimony.getConsumed().getColdWater();
-        int hotWater = responseOldTestimony.getConsumed().getHotWater();
-        int gas = responseOldTestimony.getConsumed().getGas();
-        int electricity = responseOldTestimony.getConsumed().getElectricity();
+        String resultText = responseOldTestimony.getFaultcode().getResultText();
+        String resultCode = responseOldTestimony.getFaultcode().getResultCode();
 
-        Assert.assertEquals("04-2020", date);
-        Assert.assertEquals("03-2020", previousDate);
-        Assert.assertEquals( 1, coldWater);
-        Assert.assertEquals(1, hotWater);
-        Assert.assertEquals(1, gas);
+        Assert.assertEquals("success", resultText);
+        Assert.assertEquals("0", resultCode);
+
 
     }
 }

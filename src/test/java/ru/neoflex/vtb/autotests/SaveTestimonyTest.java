@@ -2,6 +2,7 @@ package ru.neoflex.vtb.autotests;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import ru.neoflex.controllers.RequestTestController;
 import ru.neoflex.model.CurrentTestimony;
 import ru.neoflex.model.RequestSaveTestimony;
@@ -48,8 +49,8 @@ public class SaveTestimonyTest {
         String resultText = responseSaveTestimony.getFaultcode().getResultText();
         System.out.println(resultCode);
         System.out.println(resultText);
-        Assert.assertEquals("0", resultCode);
-        Assert.assertEquals("success", resultText);
+        Assertions.assertEquals("0", resultCode);
+        Assertions.assertEquals("success", resultText);
 
     }
 
