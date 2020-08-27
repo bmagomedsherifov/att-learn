@@ -81,6 +81,8 @@ public class SaveTestimonyTest {
             Assertions.assertEquals(gas, requestSaveTestimony.getCurrentTestimony().getGas());
             Assertions.assertEquals(electricity, requestSaveTestimony.getCurrentTestimony().getElectricity());
         }
+
     }
+    
 
     }
