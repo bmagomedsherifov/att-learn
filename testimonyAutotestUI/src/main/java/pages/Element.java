@@ -13,11 +13,16 @@ public class Element extends BasePage {
         this.driver = driver;
     }
 
+    //метод для получения текста хедера
     public String getHeaderText() {
         return driver.findElement(header).getText();
     }
 
+    //метод для нажатия кнопки назад
     public void clickBackButton(){
+        //перед тем как кликнуть на кнопку назад тест будет ждать пока кнопка не будет кликабильной и после этого нажмет на нее
+        waitForElementClickable(driver.findElement(backButton), driver);
         click(driver.findElement(backButton));
     }
+
 }
